@@ -1,5 +1,5 @@
  {
-   "domain": "voice_agent",
+   "domain": "realtimegpt_agent",
    "name": "Voice Agent",
    "version": "1.0.0",
    "requirements": ["openai", "aiohttp", "pydub"],
