@@ -1,5 +1,5 @@
 import logging
-from homeassistant.components.conversation import Agent, ConversationInput
+from homeassistant.components.conversation.agent import Agent, ConversationInput
 from .llm_interface import process_audio
 from .tool_executor import execute_tool
 
