@@ -39,7 +39,11 @@ class RealtimeGPTAgent(Agent):
                 "audio": llm_response.get("audio")
             }
         }
+class TestAgent(Agent):
+    async def async_process(self, input):
+        return {"response": {"text": "Agent ist aktiv."}}
 
 async def async_get_agent(hass):
     _LOGGER.info("async_get_agent für RealtimeGPTAgent aufgerufen.")
-    return RealtimeGPTAgent(hass)
+    #return RealtimeGPTAgent(hass)
+    return TestAgent()
