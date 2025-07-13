@@ -1,6 +1,5 @@
 import logging
-from homeassistant.components import conversation
-
+from homeassistant.components import conversation as ha_conversation
 from .conversation import RealtimeGPTAgent
 
 DOMAIN = "realtimegpt_agent"
@@ -18,7 +17,7 @@ async def async_setup_entry(hass, entry):
 
     # Agent direkt registrieren
     agent = RealtimeGPTAgent(hass)
-    conversation.async_set_agent(hass, entry, agent)
+    ha_conversation.async_set_agent(hass, entry, agent)
 
     return True
 
