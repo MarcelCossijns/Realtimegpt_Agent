@@ -1,7 +1,9 @@
 from homeassistant.components.conversation import Agent, ConversationInput
+
+from .audio_response import synthesize_speech
 from .llm_interface import process_audio
 from .tool_executor import execute_tool
-from .audio_response import synthesize_speech
+
 
 class VoiceLLMAgent(Agent):
     def __init__(self, hass):
@@ -15,11 +17,13 @@ class VoiceLLMAgent(Agent):
     def attribution(self):
         return "Powered by GPT-4o"
 
+
     async def async_process(self, input: ConversationInput):
         if not input.audio:
             return {"response": {"text": "Audio erforderlich."}}
 
-        llm_response = await process_audio(input.audio)
+        api_key = self.hass.data["realtimegpt_agent"].get("api_key")
+        llm_response = await process_audio(input.audio, api_key)
 
         if llm_response.get("tool_call"):
             await execute_tool(self.hass, llm_response["tool_call"])
@@ -30,6 +34,7 @@ class VoiceLLMAgent(Agent):
                 "audio": llm_response.get("audio")
             }
         }
+
 
 async def async_get_agent(hass):
     return VoiceLLMAgent(hass)
