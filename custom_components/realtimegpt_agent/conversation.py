@@ -43,3 +43,11 @@ class RealtimeGPTAgent(ConversationEntity):
             res.async_set_speech(text)
         return ConversationResult(conversation_id=None, response=res, continue_conversation=False)
 
+
+async def async_setup_entry(
+        hass: HomeAssistant,
+        config_entry: ConfigEntry,
+        async_add_entities: AddEntitiesCallback,
+) -> None:
+    """Register the RealtimeGPTAgent as a conversation entity."""
+    async_add_entities([RealtimeGPTAgent(hass)])
