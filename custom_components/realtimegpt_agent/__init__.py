@@ -8,9 +8,7 @@ DOMAIN = "realtimegpt_agent"
 _LOGGER = logging.getLogger(__name__)
 
 PLATFORMS = (
-    Platform.AI_TASK,
     Platform.CONVERSATION,
-    Platform.TTS,
 )
 
 
