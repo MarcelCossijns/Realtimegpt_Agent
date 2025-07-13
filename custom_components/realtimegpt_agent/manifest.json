@@ -6,5 +6,6 @@
    "dependencies": ["conversation"],
    "integration_type": "conversation",
    "codeowners": ["@marcelcossijns"],
+   "iot_class": "cloud_polling",
     "config_flow": true
  }
