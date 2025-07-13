@@ -56,5 +56,14 @@ async def async_setup_entry(
         config_entry: ConfigEntry,
         async_add_entities: AddEntitiesCallback,
 ) -> None:
+    _LOGGER.info("async_setup_entry")
     """Register the RealtimeGPTAgent as a conversation entity."""
-    async_add_entities([RealtimeGPTAgent(hass)])
+    for subentry in config_entry.subentries.values():
+        if subentry.subentry_type != "conversation":
+            continue
+
+        _LOGGER.info("async_setup_entry - subentry")
+        async_add_entities(
+            [RealtimeGPTAgent(config_entry, subentry)],
+            config_subentry_id=subentry.subentry_id,
+        )
