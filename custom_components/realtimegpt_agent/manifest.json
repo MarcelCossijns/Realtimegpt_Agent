@@ -5,5 +5,6 @@
    "requirements": ["openai", "aiohttp", "pydub"],
    "dependencies": ["conversation"],
    "integration_type": "conversation",
-   "codeowners": ["@marcelcossijns"]
+   "codeowners": ["@marcelcossijns"],
+    "config_flow": true
  }
