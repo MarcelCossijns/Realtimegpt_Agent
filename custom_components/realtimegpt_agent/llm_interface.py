@@ -1,5 +1,5 @@
 import openai
-from .audio_response import synthesize_speech
+from .audio_output import synthesize_speech
 
 async def process_audio(audio_bytes):
     client = openai.OpenAI()
