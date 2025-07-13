@@ -1,10 +1,12 @@
 import logging
 from homeassistant.components.conversation import ConversationEntity, ConversationInput
+from homeassistant.components import conversation
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from .llm_interface import process_audio
 from .tool_executor import execute_tool
+from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -12,6 +14,11 @@ class RealtimeGPTAgent(ConversationEntity):
     def __init__(self, hass):
         self.hass = hass
         _LOGGER.info("RealtimeGPTAgent initialisiert.")
+        super().__init__(entry, subentry)
+        if self.subentry.data.get(CONF_LLM_HASS_API):
+            self._attr_supported_features = (
+                conversation.ConversationEntityFeature.CONTROL
+            )
 
     @property
     def supported_languages(self) -> list[str]:
@@ -20,6 +27,16 @@ class RealtimeGPTAgent(ConversationEntity):
     @property
     def attribution(self) -> str:
         return "Powered by GPT-4o"
+
+    async def async_added_to_hass(self) -> None:
+        """When entity is added to Home Assistant."""
+        await super().async_added_to_hass()
+        conversation.async_set_agent(self.hass, self.entry, self)
+
+    async def async_will_remove_from_hass(self) -> None:
+        """When entity will be removed from Home Assistant."""
+        conversation.async_unset_agent(self.hass, self.entry)
+        await super().async_will_remove_from_hass()
 
     async def _async_handle_message(self, input: ConversationInput, chat_log):
         _LOGGER.debug("Verarbeite Konversationseingabe über RealtimeGPTAgent.")
@@ -46,3 +63,17 @@ class RealtimeGPTAgent(ConversationEntity):
             res.async_set_speech(text)
         return ConversationResult(conversation_id=None, response=res, continue_conversation=False)
 
+async def async_setup_entry(
+        hass: HomeAssistant,
+        config_entry: ConfigEntry,
+        async_add_entities: AddConfigEntryEntitiesCallback,
+) -> None:
+    """Set up conversation entities."""
+    for subentry in config_entry.subentries.values():
+        if subentry.subentry_type != "conversation":
+            continue
+
+        async_add_entities(
+            [RealtimeGPTAgent(config_entry, subentry)],
+            config_subentry_id=subentry.subentry_id,
+        )
