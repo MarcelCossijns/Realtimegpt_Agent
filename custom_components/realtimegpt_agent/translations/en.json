@@ -1,3 +1,11 @@
 {
-  "title": "Voice Agent"
+  "title": "Voice Agent",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to OpenAI",
+        "description": "Enter your OpenAI API key to use the Voice Agent."
+      }
+    }
+  }
 }
