@@ -27,5 +27,3 @@ async def async_unload_entry(hass, entry):
     hass.data[DOMAIN].pop("api_key", None)
     _LOGGER.info("%s: async_unload_entry ausgeführt. API-Key entfernt.", DOMAIN)
     return True
-async def async_get_agent(hass, agent_id: str):
-    _LOGGER.warning("conversation: requested agent ID: %s", agent_id)

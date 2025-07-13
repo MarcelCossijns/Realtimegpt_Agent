@@ -1,0 +1,11 @@
+{
+  "title": "Voice Agent",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configure OpenAI Access",
+        "description": "Enter your OpenAI API key to enable GPT-based voice agent."
+      }
+    }
+  }
+}
