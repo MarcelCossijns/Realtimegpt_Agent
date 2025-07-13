@@ -1,6 +1,8 @@
 import logging
 from homeassistant.helpers import discovery
 
+from homeassistant.components import conversation
+
 DOMAIN = "realtimegpt_agent"
 _LOGGER = logging.getLogger(__name__)
 
@@ -16,9 +18,7 @@ async def async_setup_entry(hass, entry):
     hass.data[DOMAIN]["api_key"] = entry.data.get("api_key")
     _LOGGER.info("%s: async_setup_entry ausgeführt. API-Key gespeichert.", DOMAIN)
 
-    hass.async_create_task(
-        discovery.async_load_platform(hass, "conversation", DOMAIN, {}, entry)
-    )
+    agent = RealtimeGPTAgent(hass)
     conversation.async_set_agent(hass, entry, agent)
 
     return True
