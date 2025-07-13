@@ -1,0 +1,9 @@
+ {
+   "domain": "voice_agent",
+   "name": "Voice Agent",
+   "version": "1.0.0",
+   "requirements": ["openai", "aiohttp", "pydub"],
+   "dependencies": ["conversation"],
+   "integration_type": "conversation",
+   "codeowners": ["@marcelcossijns"]
+ }

@@ -1,0 +1,6 @@
+audio_execute:
+  description: "Empfängt Audio vom Satelliten und verarbeitet es per GPT-4o."
+  fields:
+    stream_url:
+      description: "Audio-Stream vom Satellit (z. B. HTTP oder WebSocket)"
+      example: "ws://192.168.1.50:8123/audio"
