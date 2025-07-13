@@ -14,10 +14,6 @@ class RealtimeGPTAgent(ConversationEntity):
         _LOGGER.info("RealtimeGPTAgent initialisiert.")
 
     @property
-    def name(self):
-        return "Realtime GPT Agent"
-
-    @property
     def supported_languages(self) -> list[str]:
         return ["de", "en"]
 
@@ -50,20 +46,3 @@ class RealtimeGPTAgent(ConversationEntity):
             res.async_set_speech(text)
         return ConversationResult(conversation_id=None, response=res, continue_conversation=False)
 
-
-async def async_setup_entry(
-        hass: HomeAssistant,
-        config_entry: ConfigEntry,
-        async_add_entities: AddEntitiesCallback,
-) -> None:
-    _LOGGER.info("async_setup_entry")
-    """Register the RealtimeGPTAgent as a conversation entity."""
-    for subentry in config_entry.subentries.values():
-        if subentry.subentry_type != "conversation":
-            continue
-
-        _LOGGER.info("async_setup_entry - subentry")
-        async_add_entities(
-            [RealtimeGPTAgent(config_entry, subentry)],
-            config_subentry_id=subentry.subentry_id,
-        )
