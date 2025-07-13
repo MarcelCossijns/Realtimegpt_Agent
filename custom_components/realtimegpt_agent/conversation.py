@@ -4,8 +4,9 @@ from .audio_response import synthesize_speech
 from .llm_interface import process_audio
 from .tool_executor import execute_tool
 
+from homeassistant.components.conversation import Agent, ConversationInput
 
-class VoiceLLMAgent(Agent):
+class RealtimeGPTAgent(Agent):
     def __init__(self, hass):
         self.hass = hass
 
@@ -37,4 +38,4 @@ class VoiceLLMAgent(Agent):
 
 
 async def async_get_agent(hass):
-    return VoiceLLMAgent(hass)
+    return RealtimeGPTAgent(hass)
