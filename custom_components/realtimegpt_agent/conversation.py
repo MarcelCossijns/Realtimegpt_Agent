@@ -1,5 +1,8 @@
 import logging
 from homeassistant.components.conversation import ConversationEntity, ConversationInput
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.core import HomeAssistant
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from .llm_interface import process_audio
 from .tool_executor import execute_tool
 
@@ -9,6 +12,10 @@ class RealtimeGPTAgent(ConversationEntity):
     def __init__(self, hass):
         self.hass = hass
         _LOGGER.info("RealtimeGPTAgent initialisiert.")
+
+    @property
+    def name(self):
+        return "Realtime GPT Agent"
 
     @property
     def supported_languages(self) -> list[str]:
