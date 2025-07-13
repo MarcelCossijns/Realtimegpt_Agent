@@ -1,0 +1,6 @@
+{
+  "name": "Voice Agent",
+  "content_in_root": false,
+  "domains": ["realtimegpt_agent"],
+  "country": "global"
+}

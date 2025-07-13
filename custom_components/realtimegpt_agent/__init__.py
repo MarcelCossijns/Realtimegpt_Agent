@@ -1,4 +1,4 @@
-DOMAIN = "voice_llm_agent"
+DOMAIN = "realtimegpt_agent"
 
 async def async_setup(hass, config):
     """Set up the Voice LLM Agent integration (config.yaml-basiert)."""
