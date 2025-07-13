@@ -4,6 +4,7 @@ import voluptuous as vol
 
 DOMAIN = "realtimegpt_agent"
 
+
 class RealtimeGPTConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     VERSION = 1
 
@@ -11,7 +12,10 @@ class RealtimeGPTConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         errors = {}
 
         if user_input is not None:
-            return self.async_create_entry(title="Realtime GPT Agent", data=user_input)
+            return self.async_create_entry(
+                title="Realtime GPT Agent",
+                data={CONF_API_KEY: user_input[CONF_API_KEY]}
+            )
 
         return self.async_show_form(
             step_id="user",
