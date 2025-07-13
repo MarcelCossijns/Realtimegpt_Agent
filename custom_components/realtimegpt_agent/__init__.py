@@ -19,6 +19,7 @@ async def async_setup_entry(hass, entry):
     hass.async_create_task(
         discovery.async_load_platform(hass, "conversation", DOMAIN, {}, entry)
     )
+    conversation.async_set_agent(hass, entry, agent)
 
     return True
 

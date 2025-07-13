@@ -47,3 +47,20 @@ async def async_get_agent(hass):
     _LOGGER.info("async_get_agent für RealtimeGPTAgent aufgerufen.")
     #return RealtimeGPTAgent(hass)
     return TestAgent()
+
+
+async def async_setup_entry(
+        hass: HomeAssistant,
+        config_entry: OpenAIConfigEntry,
+        async_add_entities: AddConfigEntryEntitiesCallback,
+) -> None:
+    """Set up conversation entities."""
+
+    _LOGGER.info("async_setup_entry für RealtimeGPTAgent aufgerufen.")
+    for subentry in config_entry.subentries.values():
+        if subentry.subentry_type != "conversation":
+            continue
+
+        async_add_entities(
+            [RealtimeGPTAgent(hass)]
+        )
