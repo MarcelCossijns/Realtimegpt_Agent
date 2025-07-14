@@ -11,20 +11,16 @@ from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 _LOGGER = logging.getLogger(__name__)
 
 class RealtimeGPTAgent(ConversationEntity):
-    def __init__(self, hass, entry, subentry):
-        # Erst Entry/Subentry an die Basisklasse übergeben
-        super().__init__(entry, subentry)
-
-        # Dann eigene Attribute setzen
+    def __init__(self, hass: HomeAssistant, entry: ConfigEntry) -> None:
+        # Erst Entry an die Basisklasse übergeben …
+        super().__init__(entry)
+        # … dann eigene Felder setzen
         self.hass = hass
         self.entry = entry
-        self.subentry = subentry
         _LOGGER.info("RealtimeGPTAgent initialisiert.")
-        super().__init__(entry, subentry)
-        if self.subentry.data.get(CONF_LLM_HASS_API):
-            self._attr_supported_features = (
-                conversation.ConversationEntityFeature.CONTROL
-            )
+
+        if entry.data.get(CONF_LLM_HASS_API):
+            self._attr_supported_features = ConversationEntityFeature.CONTROL
 
     @property
     def supported_languages(self) -> list[str]:
@@ -73,16 +69,9 @@ class RealtimeGPTAgent(ConversationEntity):
 
 async def async_setup_entry(
         hass: HomeAssistant,
-        config_entry: ConfigEntry,
+        entry: ConfigEntry,
         async_add_entities: AddConfigEntryEntitiesCallback,
 ) -> None:
-    """Set up conversation entities."""
-    _LOGGER.warning("async_setup_entry (conversation.py")
-    for subentry in config_entry.subentries.values():
-        if subentry.subentry_type != "conversation":
-            continue
-
-        async_add_entities(
-            [RealtimeGPTAgent(config_entry, subentry)],
-            config_subentry_id=subentry.subentry_id,
-        )
+    _LOGGER.warning("async_setup_entry (conversation.py)")
+    # Einfach genau einen Agent anlegen:
+    async_add_entities([RealtimeGPTAgent(hass, entry)], True)
