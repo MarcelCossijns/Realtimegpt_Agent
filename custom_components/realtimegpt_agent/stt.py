@@ -13,14 +13,10 @@ async def async_setup_entry(
 ) -> bool:
     """Damit HA diese Plattform lädt."""
     _LOGGER.debug("stt.async_setup_entry called")
-    for subentry in config_entry.subentries.values():
-        if subentry.subentry_type != "sst":
-            continue
 
-            async_add_entities(
-                [RealtimeGptSttProvider(hass)],
-                config_subentry_id=subentry.subentry_id,
-            )
+    async_add_entities(
+        [RealtimeGptSttProvider(hass)]
+    )
 
     return True
 
