@@ -16,6 +16,8 @@ class RealtimeGPTAgent(ConversationEntity):
         # … dann eigene Felder setzen
         self.hass = hass
         self.entry = entry
+        self._attr_name = entry.name
+        self._attr_unique_id = entry.entry_id
         _LOGGER.info("RealtimeGPTAgent initialisiert.")
 
     @property
@@ -28,7 +30,6 @@ class RealtimeGPTAgent(ConversationEntity):
 
     async def async_added_to_hass(self) -> None:
         """When entity is added to Home Assistant."""
-        _LOGGER.warning("async_added_to_hass (conversation.py")
         await super().async_added_to_hass()
         conversation.async_set_agent(self.hass, self.entry, self)
 
