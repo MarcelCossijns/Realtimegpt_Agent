@@ -5,8 +5,6 @@ from homeassistant.config_entries import ConfigEntry
 DOMAIN = "realtimegpt_agent"
 PLATFORMS = (
     Platform.CONVERSATION,
-    Platform.STT,
-    Platform.TTS,
 )
 
 async def async_setup(hass: HomeAssistant, config):
@@ -15,8 +13,6 @@ async def async_setup(hass: HomeAssistant, config):
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     hass.data.setdefault(DOMAIN, {})[ "api_key"] = entry.data.get(CONF_API_KEY)
-
-    # forward an alle drei Plattformen
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     return True
 

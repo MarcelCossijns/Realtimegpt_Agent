@@ -3,14 +3,6 @@ from homeassistant.core import HomeAssistant
 from homeassistant.components.stt import Provider
 from .llm_interface import process_audio
 
-async def async_setup_entry(
-        hass: HomeAssistant,
-        entry: ConfigEntry,
-        async_add_entities  # wird von HA übergeben, aber nicht gebraucht
-) -> bool:
-    """Wird von HA aufgerufen, wenn der ConfigEntry für STT weitergeleitet wird."""
-    return True
-
 async def async_get_provider(
         hass: HomeAssistant,
         config,            # Config aus integrations UI (wird nicht genutzt)
