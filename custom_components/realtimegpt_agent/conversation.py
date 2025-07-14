@@ -12,8 +12,7 @@ _LOGGER = logging.getLogger(__name__)
 
 class RealtimeGPTAgent(ConversationEntity):
     def __init__(self, hass: HomeAssistant, entry: ConfigEntry) -> None:
-        # Erst Entry an die Basisklasse übergeben …
-        super().__init__(entry)
+        super().__init__()
         # … dann eigene Felder setzen
         self.hass = hass
         self.entry = entry
