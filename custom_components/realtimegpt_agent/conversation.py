@@ -18,9 +18,6 @@ class RealtimeGPTAgent(ConversationEntity):
         self.entry = entry
         _LOGGER.info("RealtimeGPTAgent initialisiert.")
 
-        if entry.data.get(CONF_LLM_HASS_API):
-            self._attr_supported_features = ConversationEntityFeature.CONTROL
-
     @property
     def supported_languages(self) -> list[str]:
         return ["de", "en"]
