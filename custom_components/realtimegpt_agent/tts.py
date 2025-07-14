@@ -8,7 +8,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry(
         hass: HomeAssistant,
-        entry: ConfigEntry,
+        config_entry: ConfigEntry,
         async_add_entities  # wird übergeben, aber hier nicht genutzt
 ) -> bool:
     """Damit HA diese Plattform lädt."""
