@@ -3,6 +3,7 @@ from .audio_output import synthesize_speech
 
 async def process_audio(audio_bytes):
     client = openai.OpenAI()
+    _LOGGER.info("process_audio")
 
     response = client.chat.completions.create(
         model="gpt-4o",

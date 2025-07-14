@@ -7,5 +7,7 @@
   "integration_type": "conversation",
   "iot_class": "cloud_polling",
   "codeowners": ["@marcelcossijns"],
+  "stt": true,
+  "tts": true,
   "config_flow": true
 }
