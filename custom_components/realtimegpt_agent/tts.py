@@ -4,13 +4,12 @@ from homeassistant.components.tts import Provider
 from .llm_interface import process_audio
 
 async def async_setup_entry(
-        hass: HomeAssistant, entry: ConfigEntry
+        hass: HomeAssistant, entry: ConfigEntry, async_add_entities
 ) -> bool:
     """Stellt sicher, dass HA diese Plattform lädt."""
     return True
 
 async def async_get_engine(hass: HomeAssistant, config, discovery_info=None):
-    """HA hook: liefert deine TTS-Instanz aus."""
     return RealtimeGptTtsProvider(hass)
 
 class RealtimeGptTtsProvider(Provider):
@@ -22,5 +21,4 @@ class RealtimeGptTtsProvider(Provider):
         llm_resp = await process_audio(
             message, self.hass.data["realtimegpt_agent"]["api_key"]
         )
-        # llm_resp["audio"] liefert deine Audio-Bytes (z.B. WAV/MP3)
         return llm_resp["audio"], "wav"

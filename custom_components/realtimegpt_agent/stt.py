@@ -4,7 +4,7 @@ from homeassistant.components.stt import Provider
 from .llm_interface import process_audio
 
 async def async_setup_entry(
-        hass: HomeAssistant, entry: ConfigEntry
+        hass: HomeAssistant, entry: ConfigEntry, async_add_entities
 ) -> bool:
     """Wird von HA aufgerufen, wenn der ConfigEntry für STT weitergeleitet wird."""
     # Hier musst Du nichts weiter tun,
