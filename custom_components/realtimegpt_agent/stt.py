@@ -37,8 +37,35 @@ class RealtimeGptSttProvider(Provider):
         )
         _LOGGER.debug("RealtimeGptSttProvider initialized")
         self.api_key = hass.data["realtimegpt_agent"]["api_key"]
+    @property
+    def supported_audio_formats(self) -> list[str]:
+        return ["wav", "mp3"]
+
+    @property
+    def supported_codecs(self) -> list[str]:
+        return ["pcm"]
+
+    @property
+    def supported_sample_rates(self) -> list[int]:
+        return [16000, 32000]
+
+    @property
+    def supported_bit_rates(self) -> list[int]:
+        return [16, 24]
+
+    @property
+    def supported_channels(self) -> list[int]:
+        return [1]
 
     async def async_process_audio(self, audio_bytes: bytes, language: str) -> str:
         _LOGGER.debug("RealtimeGptSttProvider.async_process_audio")
         llm_resp = await process_audio(audio_bytes, self.api_key)
         return llm_resp["text"]
+    async def async_process_audio_stream(
+                self, stream: AudioStream, language: str
+        ) -> str:
+        # Beispiel: lese den ganzen Stream und processe ihn
+        data = bytearray()
+        async for chunk in stream:
+            data.extend(chunk)
+        return await self.async_process_audio(bytes(data), language)
