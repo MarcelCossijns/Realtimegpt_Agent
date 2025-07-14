@@ -1,6 +1,7 @@
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
-from homeassistant.components.stt import Provider
+from homeassistant.components.stt import Provider, AudioStream
+from homeassistant.config_entries import ConfigEntry
 from .llm_interface import process_audio
 import logging
 
