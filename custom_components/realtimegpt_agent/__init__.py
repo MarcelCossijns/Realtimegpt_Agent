@@ -1,7 +1,7 @@
 import logging
 from homeassistant.components import conversation as ha_conversation
 from .conversation import RealtimeGPTAgent
-
+from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_API_KEY, Platform
 
 DOMAIN = "realtimegpt_agent"
@@ -17,7 +17,7 @@ async def async_setup(hass, config):
     _LOGGER.info("%s: async_setup ausgeführt (YAML)", DOMAIN)
     return True
 
-async def async_setup_entry(hass, entry: RealtimeGPTAgent):
+async def async_setup_entry(hass, entry: ConfigEntry):
     hass.data.setdefault(DOMAIN, {})
     hass.data[DOMAIN]["api_key"] = entry.data.get("api_key")
     _LOGGER.info("%s: async_setup_entry ausgeführt. API-Key gespeichert.", DOMAIN)

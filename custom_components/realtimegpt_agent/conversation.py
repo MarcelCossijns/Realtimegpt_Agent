@@ -11,8 +11,14 @@ from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 _LOGGER = logging.getLogger(__name__)
 
 class RealtimeGPTAgent(ConversationEntity):
-    def __init__(self, hass):
+    def __init__(self, hass, entry, subentry):
+        # Erst Entry/Subentry an die Basisklasse übergeben
+        super().__init__(entry, subentry)
+
+        # Dann eigene Attribute setzen
         self.hass = hass
+        self.entry = entry
+        self.subentry = subentry
         _LOGGER.info("RealtimeGPTAgent initialisiert.")
         super().__init__(entry, subentry)
         if self.subentry.data.get(CONF_LLM_HASS_API):
