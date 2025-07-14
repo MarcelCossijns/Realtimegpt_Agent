@@ -16,9 +16,13 @@ class RealtimeGPTAgent(ConversationEntity):
         # … dann eigene Felder setzen
         self.hass = hass
         self.entry = entry
-        self._attr_name = entry.name
+        self._attr_name = entry.title or "RealtimeGPT Agent"
         self._attr_unique_id = entry.entry_id
-        _LOGGER.info("RealtimeGPTAgent initialisiert.")
+        _LOGGER.info(
+            "RealtimeGPTAgent initialisiert (Name=%s, ID=%s)",
+            self._attr_name,
+            self._attr_unique_id,
+        )
 
     @property
     def supported_languages(self) -> list[str]:
