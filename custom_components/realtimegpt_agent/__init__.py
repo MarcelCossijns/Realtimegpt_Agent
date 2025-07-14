@@ -5,6 +5,8 @@ from homeassistant.config_entries import ConfigEntry
 DOMAIN = "realtimegpt_agent"
 PLATFORMS = (
     Platform.CONVERSATION,
+    Platform.STT,
+    Platform.TTS,
 )
 
 async def async_setup(hass: HomeAssistant, config):
