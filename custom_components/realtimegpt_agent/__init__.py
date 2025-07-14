@@ -1,34 +1,25 @@
-import logging
-from homeassistant.components import conversation as ha_conversation
-from .conversation import RealtimeGPTAgent
-from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_API_KEY, Platform
+from homeassistant.core import HomeAssistant
+from homeassistant.config_entries import ConfigEntry
 
 DOMAIN = "realtimegpt_agent"
-_LOGGER = logging.getLogger(__name__)
-
 PLATFORMS = (
     Platform.CONVERSATION,
     Platform.STT,
     Platform.TTS,
 )
 
-
-async def async_setup(hass, config):
+async def async_setup(hass: HomeAssistant, config):
     hass.data.setdefault(DOMAIN, {})
-    _LOGGER.info("%s: async_setup ausgeführt (YAML)", DOMAIN)
     return True
 
-async def async_setup_entry(hass, entry: ConfigEntry):
-    hass.data.setdefault(DOMAIN, {})
-    hass.data[DOMAIN]["api_key"] = entry.data.get("api_key")
-    _LOGGER.info("%s: async_setup_entry ausgeführt. API-Key gespeichert.", DOMAIN)
+async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
+    hass.data.setdefault(DOMAIN, {})[ "api_key"] = entry.data.get(CONF_API_KEY)
 
+    # forward an alle drei Plattformen
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
-
     return True
 
-async def async_unload_entry(hass, entry):
+async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
     hass.data[DOMAIN].pop("api_key", None)
-    _LOGGER.info("%s: async_unload_entry ausgeführt. API-Key entfernt.", DOMAIN)
     return True

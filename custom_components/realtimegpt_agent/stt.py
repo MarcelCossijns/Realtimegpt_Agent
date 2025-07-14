@@ -4,15 +4,17 @@ from homeassistant.components.stt import Provider
 from .llm_interface import process_audio
 
 async def async_setup_entry(
-        hass: HomeAssistant, entry: ConfigEntry, async_add_entities
+        hass: HomeAssistant,
+        entry: ConfigEntry,
+        async_add_entities  # wird von HA übergeben, aber nicht gebraucht
 ) -> bool:
     """Wird von HA aufgerufen, wenn der ConfigEntry für STT weitergeleitet wird."""
-    # Hier musst Du nichts weiter tun,
-    # der eigentliche Provider kommt über async_get_provider.
     return True
 
 async def async_get_provider(
-        hass: HomeAssistant, config, discovery_info=None
+        hass: HomeAssistant,
+        config,            # Config aus integrations UI (wird nicht genutzt)
+        discovery_info=None
 ) -> Provider:
     """HA hook: liefert Deine KI-basierte STT-Klasse aus."""
     return RealtimeGptSttProvider(hass)
