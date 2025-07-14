@@ -2,6 +2,9 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.components.tts import Provider
 from .llm_interface import process_audio
+from homeassistant.exceptions import HomeAssistantError
+from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
+
 import logging
 
 _LOGGER = logging.getLogger(__name__)
@@ -9,16 +12,18 @@ _LOGGER = logging.getLogger(__name__)
 async def async_setup_entry(
         hass: HomeAssistant,
         config_entry: ConfigEntry,
-        async_add_entities  # wird übergeben, aber hier nicht genutzt
-) -> bool:
-    """Damit HA diese Plattform lädt."""
-    _LOGGER.debug("tts.async_setup_entry called")
+        async_add_entities: AddConfigEntryEntitiesCallback,
+) -> None:
+    """Set up TTS entities."""
+    for subentry in config_entry.subentries.values():
+        if subentry.subentry_type != "tts":
+            continue
 
-    async_add_entities(
-        [RealtimeGptTtsProvider(hass)]
-    )
+        async_add_entities(
+            [RealtimeGptTtsProvider(config_entry, subentry)],
+            config_subentry_id=subentry.subentry_id,
+        )
 
-    return True
 
 async def async_get_engine(
         hass: HomeAssistant,

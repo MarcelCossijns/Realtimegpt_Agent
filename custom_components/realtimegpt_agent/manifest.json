@@ -4,9 +4,7 @@
   "version": "1.0.0",
   "requirements": ["openai","aiohttp","pydub"],
   "dependencies": ["conversation"],
-  "integration_type": "conversation",
-  "stt": true,
-  "tts": true,
+  "integration_type": "service",
   "iot_class": "cloud_polling",
   "config_flow": true,
   "codeowners": ["@marcelcossijns"]
