@@ -9,6 +9,8 @@ _LOGGER = logging.getLogger(__name__)
 
 PLATFORMS = (
     Platform.CONVERSATION,
+    Platform.STT,
+    Platform.TTS,
 )
 
 
