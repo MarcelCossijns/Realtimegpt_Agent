@@ -9,10 +9,12 @@ async def async_get_provider(
         discovery_info=None
 ) -> Provider:
     """HA hook: liefert Deine KI-basierte STT-Klasse aus."""
+    _LOGGER.warning("async_get_provider")
     return RealtimeGptSttProvider(hass)
 
 class RealtimeGptSttProvider(Provider):
     def __init__(self, hass: HomeAssistant):
+        _LOGGER.warning("RealtimeGptSttProvider.__init__")
         super().__init__(
             name="RealtimeGPT Multimodal STT",
             supported_languages=["de", "en"],
@@ -21,5 +23,6 @@ class RealtimeGptSttProvider(Provider):
         self.api_key = hass.data["realtimegpt_agent"]["api_key"]
 
     async def async_process_audio(self, audio_bytes: bytes, language: str) -> str:
+        _LOGGER.warning("RealtimeGptSttProvider.async_process_audio")
         llm_resp = await process_audio(audio_bytes, self.api_key)
         return llm_resp["text"]
